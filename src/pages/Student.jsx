@@ -11,7 +11,16 @@ function Student() {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const studentId = "student123"; // Replace with logged-in student's ID later
+  // 🔹 Get Logged-in Student ID
+  const studentId = localStorage.getItem("studentId");
+
+  if (!studentId) {
+    return (
+      <h3 className="text-center mt-5 text-danger">
+        No student logged in! Please login again.
+      </h3>
+    );
+  }
 
   // 🔹 Fetch Enrolled Courses
   useEffect(() => {
@@ -35,7 +44,7 @@ function Student() {
     };
 
     fetchEnrolledCourses();
-  }, []);
+  }, [studentId]);
 
   // 🔹 Handle Unenroll
   const handleUnenroll = async (courseId) => {

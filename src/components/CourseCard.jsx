@@ -6,6 +6,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 
 function CourseCard() {
   const [courses, setCourses] = useState([]);
@@ -15,7 +16,12 @@ function CourseCard() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "courses"));
+        // const querySnapshot = await getDocs(collection(db, "courses"));
+        const q = query(
+          collection(db, "courses"),
+          where("teacherId", "==", auth.currentUser.uid)
+        );
+        const querySnapshot = await getDocs(q);
         const courseList = querySnapshot.docs.map((doc) => {
           const data = doc.data() || {};
 

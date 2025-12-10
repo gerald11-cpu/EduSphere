@@ -21,6 +21,7 @@ function FormModal() {
         thumbnail,
         type,
         createdAt: new Date(),
+        teacherId: auth.currentUser.uid, // 🔥 Save teacher ID
       });
 
       alert("✅ Course saved successfully!");

@@ -48,7 +48,7 @@ function Teacherlogin() {
         return;
       }
 
-      navigate("/teacher");
+      navigate("/Instructure");
     } catch (error) {
       alert("Invalid Login");
     }

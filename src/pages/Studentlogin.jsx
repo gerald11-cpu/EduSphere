@@ -26,7 +26,7 @@ function Studentlogin() {
 
   const [flag, setFlag] = useState(false);
 
-  // Student Login
+  // ================= STUDENT LOGIN =====================
   const handleStudentLogin = async () => {
     try {
       const userCredential = await signInWithEmailAndPassword(
@@ -34,7 +34,9 @@ function Studentlogin() {
         studentEmail,
         studentPassword
       );
+
       const user = userCredential.user;
+
       const docSnap = await getDoc(doc(db, "users", user.uid));
 
       if (!docSnap.exists()) {
@@ -47,13 +49,16 @@ function Studentlogin() {
         return;
       }
 
+      // 🔥 Save student ID for Student Dashboard
+      localStorage.setItem("studentId", user.uid);
+
       navigate("/Student");
     } catch (error) {
       alert("Invalid Login");
     }
   };
 
-  // Signup
+  // ================= SIGN-UP =====================
   const handleRegister = async () => {
     try {
       const userCredential = await createUserWithEmailAndPassword(
@@ -61,6 +66,7 @@ function Studentlogin() {
         signupEmail,
         signupPassword
       );
+
       const user = userCredential.user;
 
       await setDoc(doc(db, "users", user.uid), {
@@ -110,7 +116,7 @@ function Studentlogin() {
 
             <div className="d-flex flex-wrap justify-content-center gap-4">
               {flag ? (
-                // ================= SIGN-UP =====================
+                // ================= SIGN-UP CARD =====================
                 <Card
                   className="text-center shadow-lg border-0"
                   style={{
@@ -166,7 +172,7 @@ function Studentlogin() {
                   </Card.Body>
                 </Card>
               ) : (
-                // ================= STUDENT LOGIN =====================
+                // ================= LOGIN CARD =====================
                 <Card
                   className="text-center shadow-lg border-0"
                   style={{
